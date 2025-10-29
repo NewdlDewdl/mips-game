@@ -88,7 +88,10 @@ main_post_result:
     lw $s2, 4($sp)
     lw $s3, 0($sp)
     addiu $sp, $sp, 20
-    jr $ra
+
+    # Exit program properly
+    li $v0, 10
+    syscall
 
 .globl game_loop
 game_loop:
