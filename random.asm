@@ -57,12 +57,24 @@ ri_done:
 
 .globl random_bit
 random_bit:
+    addiu $sp, $sp, -4
+    sw $ra, 0($sp)
+
     li $a0, 2
     jal random_int
+
+    lw $ra, 0($sp)
+    addiu $sp, $sp, 4
     jr $ra
 
 .globl random_byte
 random_byte:
+    addiu $sp, $sp, -4
+    sw $ra, 0($sp)
+
     li $a0, 256
     jal random_int
+
+    lw $ra, 0($sp)
+    addiu $sp, $sp, 4
     jr $ra
