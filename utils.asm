@@ -30,8 +30,14 @@ print_char:
 
 .globl print_newline
 print_newline:
+    addiu $sp, $sp, -4
+    sw $ra, 0($sp)
+
     la $a0, newline_char
     jal print_string
+
+    lw $ra, 0($sp)
+    addiu $sp, $sp, 4
     jr $ra
 
 .globl read_string
