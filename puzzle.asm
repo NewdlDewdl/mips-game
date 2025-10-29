@@ -14,11 +14,12 @@ num_puzzles:    .word 0
 .globl generate_puzzles
 generate_puzzles:
     # $a0 = level (number of puzzles)
-    addiu $sp, $sp, -16
-    sw $ra, 12($sp)
-    sw $s0, 8($sp)
-    sw $s1, 4($sp)
-    sw $s2, 0($sp)
+    addiu $sp, $sp, -20
+    sw $ra, 16($sp)
+    sw $s0, 12($sp)
+    sw $s1, 8($sp)
+    sw $s2, 4($sp)
+    sw $s3, 0($sp)
 
     move $s0, $a0            # level count
     sw $s0, num_puzzles
@@ -30,30 +31,37 @@ generate_puzzles:
 
 gp_loop:
     bge $s1, $s0, gp_done
-    sll $t0, $s1, 3          # offset = index * 8
-    add $t1, $s2, $t0
 
     # Random type 0 or 1
     li $a0, 2
     jal random_int
-    sb $v0, 0($t1)
+    move $s3, $v0            # Save random type
+
+    # Calculate address (must recalculate after function calls)
+    sll $t0, $s1, 3          # offset = index * 8
+    add $t1, $s2, $t0
+    sb $s3, 0($t1)           # Store type
 
     # Reset status to unsolved (0)
     sb $zero, 1($t1)
 
     # Store random value 0-255
     jal random_byte
+    # Recalculate address after function call
+    sll $t0, $s1, 3
+    add $t1, $s2, $t0
     sw $v0, 4($t1)
 
     addiu $s1, $s1, 1
     j gp_loop
 
 gp_done:
-    lw $ra, 12($sp)
-    lw $s0, 8($sp)
-    lw $s1, 4($sp)
-    lw $s2, 0($sp)
-    addiu $sp, $sp, 16
+    lw $ra, 16($sp)
+    lw $s0, 12($sp)
+    lw $s1, 8($sp)
+    lw $s2, 4($sp)
+    lw $s3, 0($sp)
+    addiu $sp, $sp, 20
     jr $ra
 
 .globl get_puzzle_address
