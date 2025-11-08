@@ -1,0 +1,53 @@
+# MIPS Assembly build artifacts
+*.o
+*.out
+*.exe
+*.bin
+*.hex
+
+# MARS IDE files
+*.jar.log
+MARSlogs/
+
+# QtSPIM files
+*.dump
+
+# SPIM files
+*.s.out
+
+# IDE-specific files
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Eclipse
+.project
+.cproject
+.settings/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# Debug files
+*.lst
+*.map
